@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import no.nyseth.fantasd.network.ApiLinks;
 import no.nyseth.fantasd.network.RequestGen;
+import no.nyseth.fantasd.network.VolleyGen;
 
 public class ItemList {
     //Class for handling the list of items in the database.
@@ -35,9 +36,9 @@ public class ItemList {
                 if (cb != null) {
                     cb.run();
                 }
-            }
-        }, ApiLinks.newEL
+            }}, ApiLinks.newEL
         );
+        VolleyGen.instance().addRq(requestGen);
     }
 
     public void checkList() {
@@ -54,6 +55,10 @@ public class ItemList {
 
     public ArrayList<Items> getItems() {
         return items;
+    }
+
+    public Items getItemById(int id) {
+        return items.get(id);
     }
 
 }
