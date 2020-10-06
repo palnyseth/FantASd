@@ -7,25 +7,20 @@ import com.android.volley.toolbox.Volley;
 import no.nyseth.fantasd.MainApp;
 
 public class VolleyGen {
-
-    //Checks for existing instance, creates if none.
-    private static VolleyGen volleyInstance = null;
-
-    public static VolleyGen instance() {
-        if (volleyInstance == null) {
-            volleyInstance = new VolleyGen();
-        }
-        return volleyInstance;
-    }
-
-    private RequestQueue rq;
-
+    private static VolleyGen instance = null;
+    private RequestQueue requestQueue;
 
     private VolleyGen() {
-        this.rq = Volley.newRequestQueue(MainApp.getFantAppContext());
+        this.requestQueue = Volley.newRequestQueue(MainApp.getFantAppContext());
     }
 
-    public <T> void addRq(Request<T> tRequest) {
-        rq.add(tRequest);
+    public static VolleyGen instance() {
+        if (instance == null) {
+            instance = new VolleyGen();
+        }
+        return instance;
     }
+
+    public <T> void addToRequestQue(Request<T> request) {requestQueue.add(request);}
+
 }

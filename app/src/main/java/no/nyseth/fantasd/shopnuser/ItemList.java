@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
+import no.nyseth.fantasd.MainApp;
 import no.nyseth.fantasd.network.ApiLinks;
 import no.nyseth.fantasd.network.RequestGen;
 import no.nyseth.fantasd.network.VolleyGen;
@@ -38,7 +39,11 @@ public class ItemList {
                 }
             }}, ApiLinks.newEL
         );
-        VolleyGen.instance().addRq(requestGen);
+        //System.out.println("-------------------");
+        //System.out.println(ApiLinks.URL_ITEM_GET);
+        System.out.println("-------------------");
+        //VolleyGen.instance().addToRequestQue(requestGen);
+        System.out.println(requestGen);
     }
 
     public void checkList() {

@@ -35,8 +35,9 @@ public class FragmentLogin extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //View view = inflater.inflate(R.layout.fragment_login, container,false);
-        //return view;
+        View view = inflater.inflate(R.layout.fragment_login, container,false);
+        return view;
+        /*
         FloatingActionButton fab = container.getRootView().findViewById(R.id.fab); fab.hide();
         View root = inflater.inflate(R.layout.fragment_login, container, false);
         uidV = root.findViewById(R.id.login_uid);
@@ -46,7 +47,7 @@ public class FragmentLogin extends Fragment {
             loginRequest(uidV.getText().toString(),
                     pwdV.getText().toString());
         });
-        return root;
+        return root;*/
     }
 
     @Override

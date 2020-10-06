@@ -29,5 +29,6 @@
     <string name="itemName">Item navn</string>
     <string name="itemPrice">Item pris</string>
     <string name="itemDesc">Item beskrivelse</string>
+    <string name="itemId">Item Id</string>
 
 </resources>
