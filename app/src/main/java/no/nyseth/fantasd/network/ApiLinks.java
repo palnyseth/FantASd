@@ -6,6 +6,8 @@ import com.android.volley.VolleyError;
 import java.util.Arrays;
 
 public class ApiLinks {
+    //Retired atm.
+
     //Class contains the different URLs the calls are meant to go to.
 
     //Base URL

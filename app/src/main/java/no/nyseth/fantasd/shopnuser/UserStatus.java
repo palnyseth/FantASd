@@ -34,6 +34,7 @@ public class UserStatus {
 
     //Get JWT Token from server
     private String jwt;
+
     public HashMap<String, String> getJWTToken() {
         HashMap<String, String> jwtToken = new HashMap<>();
         jwtToken.put("Authorization", "Bearer " + jwt);

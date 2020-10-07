@@ -22,6 +22,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -30,6 +31,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import no.nyseth.fantasd.shopnuser.ItemList;
 import no.nyseth.fantasd.shopnuser.UserStatus;
+import no.nyseth.fantasd.ui.FragmentAddItem;
 import no.nyseth.fantasd.ui.FragmentLogin;
 import no.nyseth.fantasd.ui.home.HomeFragment;
 
@@ -41,22 +43,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        MainActivity mainActivity = this;
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Logg inn!!!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .show();
+                //Snackbar.make(view, "Logg inn!!!", Snackbar.LENGTH_LONG)
+                //.setAction("Action", null)
+                //        .show();
             }
         });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                R.id.nav_home, R.id.nav_login, R.id.nav_create)
                 .setDrawerLayout(drawer)
@@ -73,7 +76,19 @@ public class MainActivity extends AppCompatActivity {
                 int menuId = destination.getId();
                 switch(menuId) {
                     case R.id.nav_login:
-                        Toast.makeText(MainActivity.this, "Ya ttapped login", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Logg inn", Toast.LENGTH_LONG).show();
+                        fab.hide();
+                        break;
+                    case R.id.nav_create:
+                        Toast.makeText(MainActivity.this, "Registrering", Toast.LENGTH_LONG).show();
+                        fab.hide();
+                        break;
+                    case R.id.nav_additem:
+                        Toast.makeText(MainActivity.this, "Legge ut", Toast.LENGTH_LONG).show();
+                        fab.hide();
+                        break;
+                    case R.id.nav_buyitem:
+                        Toast.makeText(MainActivity.this, "Kjøp", Toast.LENGTH_LONG).show();
                         fab.hide();
                         break;
                     default:

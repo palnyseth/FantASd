@@ -7,22 +7,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import com.android.volley.Response;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.fragment.app.FragmentTransaction;
 
 import no.nyseth.fantasd.R;
-import no.nyseth.fantasd.shopnuser.UserStatus;
+import no.nyseth.fantasd.network.FantApi;
+import no.nyseth.fantasd.shopnuser.User;
+import no.nyseth.fantasd.ui.home.HomeFragment;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FragmentLogin extends Fragment {
     //Fields
     TextView uidV;
     TextView pwdV;
-    Button submitV;
+
+    private User user = new User();
 
     public FragmentLogin() {}
 
@@ -36,18 +42,61 @@ public class FragmentLogin extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container,false);
-        return view;
-        /*
-        FloatingActionButton fab = container.getRootView().findViewById(R.id.fab); fab.hide();
-        View root = inflater.inflate(R.layout.fragment_login, container, false);
-        uidV = root.findViewById(R.id.login_uid);
-        pwdV = root.findViewById(R.id.login_pwd);
-        submitV = root.findViewById(R.id.login_submit);
-        submitV.setOnClickListener(v -> {
-            loginRequest(uidV.getText().toString(),
-                    pwdV.getText().toString());
+
+        uidV = view.findViewById(R.id.login_uid);
+        pwdV = view.findViewById(R.id.login_pwd);
+        Button submitV = (Button) view.findViewById(R.id.login_submit);
+
+        submitV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.login_submit:
+                        loginUser();
+                        break;
+                }
+            }
         });
-        return root;*/
+        return view;
+    }
+
+    public void loginUser() {
+        String uid = uidV.getText().toString();
+        String pwd = pwdV.getText().toString();
+
+        if (uid.isEmpty()) {
+            uidV.setError("Intet brukernavn fylt inn");
+            uidV.requestFocus();
+            return;
+        }
+        if (pwd.isEmpty()) {
+            uidV.setError("Intet passord fylt inn");
+            uidV.requestFocus();
+            return;
+        }
+
+        Call<ResponseBody> call = FantApi.getSINGLETON().getApi().userLogin(uid,pwd);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Fragment fragment = new HomeFragment();
+                    FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                    user.setJwt(response.body().toString());
+                    Toast.makeText(getActivity(), "Ya logged inn!", Toast.LENGTH_LONG).show();
+                    fragmentTransaction.replace(R.id.container, fragment).commit();
+                    System.out.println(response.body().toString());
+                }
+                else {
+                    Toast.makeText(getActivity(), "Noe gikk galt", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
@@ -59,13 +108,5 @@ public class FragmentLogin extends Fragment {
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
         menu.clear();
         super.onPrepareOptionsMenu(menu);
-    }
-
-    public void loginRequest(String uid, String pwd) {
-        Response.Listener<String> listener = response -> {
-            UserStatus.getUserInstance().setJwt(response);
-            UserStatus.getUserInstance().setUserActive(true);
-            UserStatus.getUserInstance().getCurrentUser();
-        };
     }
 }

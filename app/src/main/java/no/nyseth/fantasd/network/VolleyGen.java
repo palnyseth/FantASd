@@ -21,6 +21,8 @@ public class VolleyGen {
         return instance;
     }
 
-    public <T> void addToRequestQue(Request<T> request) {requestQueue.add(request);}
+    public <T> void addToRequestQue(Request<T> request) {
+        requestQueue.add(request);
+    }
 
 }

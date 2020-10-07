@@ -24,5 +24,18 @@
             android:id="@+id/nav_create"
             android:icon="@drawable/ic_menu_camera"
             android:title="Lag Bruker"/>
+
+        <item
+            android:id="@+id/nav_additem"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Legg til item"
+            />
+
+        <item
+            android:id="@+id/nav_buyitem"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Legg til item"
+            />
+
     </group>
 </menu>

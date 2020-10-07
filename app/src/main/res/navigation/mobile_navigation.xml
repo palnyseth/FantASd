@@ -34,4 +34,18 @@
         android:name="no.nyseth.fantasd.ui.FragmentCreate"
         android:label="@string/menu_create"
         tools:layout="@layout/fragment_create"/>
+
+    <fragment
+        android:id="@+id/nav_additem"
+        android:name="no.nyseth.fantasd.ui.FragmentAddItem"
+        android:label="Legg til item"
+        tools:layout="@layout/fragment_additem"
+        />
+
+    <fragment
+        android:id="@+id/nav_buyitem"
+        android:name="no.nyseth.fantasd.ui.FragmentBuyItem"
+        android:label="Legg til item"
+        tools:layout="@layout/fragment_buyitem"
+        />
 </navigation>
