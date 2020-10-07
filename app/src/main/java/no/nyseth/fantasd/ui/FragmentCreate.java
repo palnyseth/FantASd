@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -90,10 +91,10 @@ public class FragmentCreate extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    Fragment fragment = new HomeFragment();
-                    FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
                     Toast.makeText(getActivity(), "Registrering ok", Toast.LENGTH_SHORT).show();
                     System.out.println(response.body().toString());
+
+                    Navigation.findNavController(getView()).popBackStack();
                 }
                 else {
                     Toast.makeText(getActivity(), "Noe gikk galt", Toast.LENGTH_LONG).show();

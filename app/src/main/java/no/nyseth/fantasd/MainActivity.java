@@ -46,14 +46,13 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        MainActivity a = this;
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Snackbar.make(view, "Logg inn!!!", Snackbar.LENGTH_LONG)
-                //.setAction("Action", null)
-                //        .show();
+                Navigation.findNavController(a, R.id.nav_host_fragment)
+                        .navigate(R.id.action_navToAddItem);
             }
         });
 

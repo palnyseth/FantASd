@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import no.nyseth.fantasd.R;
 import no.nyseth.fantasd.network.FantApi;
@@ -80,12 +81,11 @@ public class FragmentLogin extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    Fragment fragment = new HomeFragment();
-                    FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
                     user.setJwt(response.body().toString());
                     Toast.makeText(getActivity(), "Ya logged inn!", Toast.LENGTH_LONG).show();
-                    fragmentTransaction.replace(R.id.container, fragment).commit();
                     System.out.println(response.body().toString());
+
+                    Navigation.findNavController(getView()).popBackStack();
                 }
                 else {
                     Toast.makeText(getActivity(), "Noe gikk galt", Toast.LENGTH_LONG).show();

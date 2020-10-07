@@ -9,31 +9,38 @@
         android:id="@+id/nav_home"
         android:name="no.nyseth.fantasd.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-    <!--
-    <fragment
-        android:id="@+id/nav_gallery"
-        android:name="no.nyseth.fantasd.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="no.nyseth.fantasd.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />-->
-
+        tools:layout="@layout/fragment_home">
+        <argument
+            android:name="itemId"
+            app:argType="long"
+            android:defaultValue="1L"
+            />
+        <action
+            android:id="@+id/action_navToAddItem"
+            app:destination="@+id/nav_additem"
+            />
+    </fragment>
     <fragment
         android:id="@+id/nav_login"
         android:name="no.nyseth.fantasd.ui.FragmentLogin"
         android:label="@string/menu_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_navToHome"
+            app:destination="@+id/nav_home"
+            />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_create"
         android:name="no.nyseth.fantasd.ui.FragmentCreate"
         android:label="@string/menu_create"
-        tools:layout="@layout/fragment_create"/>
+        tools:layout="@layout/fragment_create">
+        <action
+            android:id="@+id/action_navToHome"
+            app:destination="@+id/nav_home"
+            />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_additem"
