@@ -14,7 +14,6 @@
     <string name="menu_create">Registrerrerering</string>
     <string name="menu_leggtil">Legg til</string>
     <string name="menu_buy">Kjøp</string>
-    <string name="menu_marked">Kjøp</string>
 
 
     <!-- User/Login -->
@@ -29,9 +28,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="itemName">Navn</string>
-    <string name="itemPrice">Pris</string>
-    <string name="itemDesc">Beskrivelse</string>
+    <string name="itemName">Item navn</string>
+    <string name="itemPrice">Item pris</string>
+    <string name="itemDesc">Item beskrivelse</string>
     <string name="itemId">Item Id</string>
 
 </resources>
