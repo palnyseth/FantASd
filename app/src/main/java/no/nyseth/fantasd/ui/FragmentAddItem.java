@@ -1,6 +1,7 @@
 package no.nyseth.fantasd.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.navigation.Navigation;
 import no.nyseth.fantasd.R;
 import no.nyseth.fantasd.network.FantApi;
 import no.nyseth.fantasd.shopnuser.Items;
+import no.nyseth.fantasd.shopnuser.LoggedInUser;
 import no.nyseth.fantasd.shopnuser.User;
 import no.nyseth.fantasd.ui.home.HomeFragment;
 import okhttp3.ResponseBody;
@@ -30,7 +32,7 @@ public class FragmentAddItem extends Fragment {
     TextView itemPriceV;
     TextView itemDescV;
     private Items items = new Items();
-    private User user = new User();
+    private LoggedInUser user = new LoggedInUser();
 
     public FragmentAddItem() {}
 
@@ -42,10 +44,10 @@ public class FragmentAddItem extends Fragment {
     }
 
     public void addItem() {
+        String authHeader = "";
         String itemTitle = itemTitleV.getText().toString();
         String itemPrice = itemPriceV.getText().toString();
         String itemDesc = itemDescV.getText().toString();
-        String authHeader = user.getJwt();
 
         if (itemTitle.isEmpty()) {
             itemTitleV.setError("Intet tittel fylt inn");

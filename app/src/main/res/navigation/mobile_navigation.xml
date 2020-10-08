@@ -45,14 +45,31 @@
     <fragment
         android:id="@+id/nav_additem"
         android:name="no.nyseth.fantasd.ui.FragmentAddItem"
-        android:label="Legg til item"
+        android:label="@string/menu_leggtil"
         tools:layout="@layout/fragment_additem"
         />
 
     <fragment
         android:id="@+id/nav_buyitem"
         android:name="no.nyseth.fantasd.ui.FragmentBuyItem"
-        android:label="Legg til item"
+        android:label="@string/menu_buy"
         tools:layout="@layout/fragment_buyitem"
+        />
+
+    <fragment
+        android:id="@+id/nav_market"
+        android:name="no.nyseth.fantasd.ui.market.MarketFragment"
+        android:label="@string/menu_marked"
+        tools:layout="@layout/fragment_market">
+        <action
+            android:id="@+id/action_navMarkToItem"
+            app:destination="@id/nav_item"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_item"
+        android:name="no.nyseth.fantasd.ui.item.ItemFragment"
+        android:label="Mårn"
+        tools:layout="@layout/fragment_item"
         />
 </navigation>

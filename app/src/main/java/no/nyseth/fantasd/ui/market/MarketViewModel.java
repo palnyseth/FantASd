@@ -17,7 +17,6 @@ public class MarketViewModel extends AndroidViewModel {
     private LiveData<List<Items>> itemsResponse;
     private ItemList itemList;
 
-
     public MarketViewModel(@NonNull Application application) {
         super(application);
         text = new MutableLiveData<String>();
