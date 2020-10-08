@@ -1,6 +1,7 @@
 package no.nyseth.fantasd.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -17,19 +18,22 @@ import androidx.navigation.Navigation;
 
 import no.nyseth.fantasd.R;
 import no.nyseth.fantasd.network.FantApi;
+import no.nyseth.fantasd.network.FantApi2;
+import no.nyseth.fantasd.shopnuser.LoggedInUser;
 import no.nyseth.fantasd.shopnuser.User;
 import no.nyseth.fantasd.ui.home.HomeFragment;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FragmentLogin extends Fragment {
     //Fields
     TextView uidV;
     TextView pwdV;
 
-    private User user = new User();
 
     public FragmentLogin() {}
 
@@ -47,6 +51,7 @@ public class FragmentLogin extends Fragment {
         uidV = view.findViewById(R.id.login_uid);
         pwdV = view.findViewById(R.id.login_pwd);
         Button submitV = (Button) view.findViewById(R.id.login_submit);
+        Button testKnapp = (Button) view.findViewById(R.id.testknapp);
 
         submitV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,8 +63,42 @@ public class FragmentLogin extends Fragment {
                 }
             }
         });
+
+        testKnapp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testpiss();
+            }
+        });
+
+
         return view;
     }
+
+    public void testpiss() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.0.149:8080/FantProsjekt/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        Call<LoggedInUser> call = FantApi.getSINGLETON().getApi().currentUser("Bearer " + "eyJ0eXAiOiJKV1QiLCJraWQiOiJhYmMtMTIzNDU2Nzg5MCIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJrYWtldGVzdGVyIiwianRpIjoiYS0xMjMiLCJpc3MiOiJ0ZW1wbGF0ZSIsImlhdCI6MTYwMjE2OTQ3MiwiZXhwIjoxNjAyMjU1ODcyLCJ1cG4iOiJrYWtldGVzdGVyIiwiZ3JvdXBzIjpbInVzZXIiXSwiYXVkIjoiYXVkIiwiYXV0aF90aW1lIjoxNjAyMTY5NDcyNDcxfQ.PvNbkaLe1JoshloGGjnU-jk-a9oaKzoTOWuNYJNP_o8pPneNLzzhgrxgMNSWp65VyptnCErVReP5A0ARP3OKJ5HNCumswqUR6PIrnqDWXdeVVyNU7_UeeQZkfkn1q5DOjMsL7Gtex5DFuS7T7NolQCbuyGXc632JKQl3Qp88dN3cYtL-hOc_B6BqmVAOMgoQUAnXIKimoWhsESrt-dnPjbFcnIa8_6eQQdYQXIG6_9xZoAGF2_JbAiwL0PPAeLrloarwJ2yvTWHsSeE3jFPyECZJ8TqmE71HXqwDwQX6nXpfy1MJ1e1qiHnebVz4E-m4dQUYLZ-HcA2hRZy8vdzNxw");
+        call.enqueue(new Callback<LoggedInUser>() {
+            @Override
+            public void onResponse(Call<LoggedInUser> call, Response<LoggedInUser> response) {
+                LoggedInUser loggedInUser = response.body();
+                System.out.println(response);
+                System.out.println(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<LoggedInUser> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private String token;
+    LoggedInUser loggedInUser = new LoggedInUser();
 
     public void loginUser() {
         String uid = uidV.getText().toString();
@@ -81,10 +120,11 @@ public class FragmentLogin extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    user.setJwt(response.body().toString());
                     Toast.makeText(getActivity(), "Ya logged inn!", Toast.LENGTH_LONG).show();
-                    System.out.println(response.body().toString());
-
+                    System.out.println("Token? " + response.body().toString());
+                    loggedInUser.setUserToken(response.body().toString());
+                    token = response.body().toString();
+                    System.out.println("Token: " + token);
                     Navigation.findNavController(getView()).popBackStack();
                 }
                 else {

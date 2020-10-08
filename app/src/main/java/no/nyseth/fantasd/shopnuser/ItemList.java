@@ -37,6 +37,7 @@ public class ItemList {
     }
 
     private ItemList() {
+        itemsResponse = new MutableLiveData<>();
     }
 
     public void getItems() {

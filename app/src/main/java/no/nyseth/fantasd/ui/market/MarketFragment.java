@@ -38,10 +38,12 @@ public class MarketFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
         final RecyclerView recyclerView = root.findViewById(R.id.recyclerview_market);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(marketViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         marketViewModel.getItems();
         marketViewModel.getItemListLiveData().observe(getViewLifecycleOwner(), new Observer<List<Items>>() {
             @Override
