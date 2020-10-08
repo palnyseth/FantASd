@@ -1,50 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".ui.FragmentAddItem">
 
-    <TextView
-        android:id="@+id/itemlist_name"
+    <EditText
+        android:id="@+id/additem_name"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_marginTop="252dp"
-        android:text="Navn"
+        android:layout_marginTop="80dp"
+        android:autofillHints="@string/itemName"
+        android:hint="@string/itemName"
+        android:inputType="textShortMessage"
+        android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/itemlist_price"
+    <EditText
+        android:id="@+id/additem_price"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginTop="12dp"
-        android:text="Pris"
+        android:autofillHints="@string/itemPrice"
+        android:hint="@string/itemPrice"
+        android:inputType="textShortMessage"
+        android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/itemlist_name" />
+        app:layout_constraintTop_toBottomOf="@id/additem_name" />
 
-    <TextView
-        android:id="@+id/itemlist_desc"
+    <EditText
+        android:id="@+id/additem_desc"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginTop="12dp"
-        android:text="Beskrivelse"
+        android:autofillHints="@string/itemDesc"
+        android:hint="@string/itemDesc"
+        android:inputType="textShortMessage"
+        android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/itemlist_price" />
+        app:layout_constraintTop_toBottomOf="@id/additem_price" />
 
     <Button
         android:id="@+id/leggtil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="408dp"
+        android:layout_marginTop="240dp"
         android:text="Legg til"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

@@ -1,7 +1,9 @@
 package no.nyseth.fantasd.network;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import no.nyseth.fantasd.shopnuser.Items;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -25,6 +27,7 @@ public interface FantApi2 {
     @GET("auth/login")
     public Call<ResponseBody> userLogin(@Query("uid") String username, @Query("pwd") String password);
 
+    @Multipart
     @POST("shop/additem")
     public Call<ResponseBody> addItem(@Header("Autorization") String authHeader, @Part("itemTitle") String itemTitle, @Part("itemPrice") String itemPrice, @Part("itemDesc") String itemDesc);
 
@@ -33,4 +36,10 @@ public interface FantApi2 {
 
     @DELETE("shop/removeitem")
     public Call<ResponseBody> removeItem(@Query("itemId") String itemId);
+
+    @GET("auth/currentuser")
+    public Call<ResponseBody> currentUser(@Header("Authorization") String auth);
+
+    @GET("shop/getitems")
+    public Call<List<Items>> getItems();
 }

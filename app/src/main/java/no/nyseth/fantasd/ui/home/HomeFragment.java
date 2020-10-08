@@ -9,25 +9,18 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import no.nyseth.fantasd.R;
-import no.nyseth.fantasd.shopnuser.ItemList;
-import no.nyseth.fantasd.ui.ItemViewer;
 
 public class HomeFragment extends Fragment {
-
-    private ItemViewer iv;
     private RecyclerView rv;
     private RecyclerView.LayoutManager lm;
 
@@ -38,10 +31,6 @@ public class HomeFragment extends Fragment {
         rv.setHasFixedSize(true);
         lm = new LinearLayoutManager(this.getContext());
         rv.setLayoutManager(lm);
-        iv = new ItemViewer();
-        rv.setAdapter(iv);
-        ItemList.getListInstance().checkList(
-                () -> iv.notifyDataSetChanged());
         return root;
     }
 
@@ -55,15 +44,11 @@ public class HomeFragment extends Fragment {
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                ItemViewer itemViewer = new ItemViewer();
-                itemViewer.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ItemViewer itemViewer = new ItemViewer();
-                itemViewer.getFilter().filter(newText);
                 return false;
             }
         });

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
+import no.nyseth.fantasd.R;
 import no.nyseth.fantasd.network.FantApi;
 import no.nyseth.fantasd.shopnuser.Items;
 import no.nyseth.fantasd.shopnuser.User;
@@ -59,6 +62,12 @@ public class FragmentAddItem extends Fragment {
             itemDescV.requestFocus();
             return;
         }
+        if (authHeader == null) {
+            itemDescV.setError("Ikke logget inN!");
+            itemDescV.requestFocus();
+            Toast.makeText(getActivity(), "Ikke logget inn!", Toast.LENGTH_LONG).show();
+            System.out.println("ingen jwt");
+        }
 
         Call<ResponseBody> call = FantApi.getSINGLETON().getApi()
                 .addItem(authHeader,itemTitle,itemPrice,itemDesc);
@@ -66,10 +75,10 @@ public class FragmentAddItem extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    Fragment fragment = new HomeFragment();
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    Toast.makeText(getActivity(), "Ok", Toast.LENGTH_LONG).show();
-                    System.out.print(response.body().toString());
+                    Toast.makeText(getActivity(), "Lagt ut!", Toast.LENGTH_SHORT).show();
+                    System.out.println(response.body().toString());
+
+                    Navigation.findNavController(getView()).popBackStack();
                 }
                 else {
                     Toast.makeText(getActivity(),"Noe gikk galt", Toast.LENGTH_LONG).show();
@@ -86,7 +95,25 @@ public class FragmentAddItem extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_additem, container,false);
+
+        itemTitleV = view.findViewById(R.id.additem_name);
+        itemPriceV = view.findViewById(R.id.additem_price);
+        itemDescV = view.findViewById(R.id.additem_desc);
+        Button submitV = (Button) view.findViewById(R.id.leggtil);
+
+        submitV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.leggtil:
+                        addItem();
+                        break;
+                }
+            }
+        });
+
+        return view;
     }
 
     @Override

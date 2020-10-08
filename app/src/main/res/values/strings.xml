@@ -12,6 +12,8 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_login">Logg Inn</string>
     <string name="menu_create">Registrerrerering</string>
+    <string name="menu_leggtil">Legg til</string>
+    <string name="menu_buy">Kjøp</string>
 
 
     <!-- User/Login -->

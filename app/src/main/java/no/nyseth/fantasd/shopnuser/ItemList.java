@@ -1,69 +1,62 @@
 package no.nyseth.fantasd.shopnuser;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.android.volley.Request;
-import com.android.volley.Response;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
-import no.nyseth.fantasd.MainApp;
 import no.nyseth.fantasd.network.ApiLinks;
+import no.nyseth.fantasd.network.FantApi;
+import no.nyseth.fantasd.network.FantApi2;
 import no.nyseth.fantasd.network.RequestGen;
-import no.nyseth.fantasd.network.VolleyGen;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class ItemList {
-    //Class for handling the list of items in the database.
-    private static ItemList listInstance = null;
+    private static final String BASE_URL = "http://192.168.0.149:8080/FantProsjekt/api/";
+    private static ItemList ItemList;
+    private static FantApi2 fantApi2;
+    private MutableLiveData<List<Items>> itemsResponse;
+    private MutableLiveData<Items> viewItemsResponse;
+    private boolean authed;
 
-    //Checks if there currently exists an instance of the itemlist.
-    public static ItemList getListInstance(){
-        if (listInstance == null) {
-            listInstance = new ItemList();
+    public static ItemList getInstance() {
+        if (ItemList == null) {
+            ItemList = new ItemList();
         }
-        return listInstance;
-    }
-
-    private ArrayList<Items> items = new ArrayList<>(); //List for all items
-
-    public void checkList(Runnable cb) {
-        RequestGen requestGen = new RequestGen(ApiLinks.URL_ITEM_GET, Request.Method.GET, Items[].class, new HashMap<String, String>(), new Response.Listener<Items[]>() {
-            @Override
-            public void onResponse(Items[] response) {
-                items.clear();
-                items.addAll(Arrays.asList(response));
-                items = items.stream().filter(Items -> Items.getItemBuyer() == null).sorted((item1, item2) -> item1.getItemTitle().compareTo(item2.getItemTitle())).collect(Collectors.toCollection(ArrayList::new));
-                if (cb != null) {
-                    cb.run();
-                }
-            }}, ApiLinks.newEL
-        );
-        //System.out.println("-------------------");
-        //System.out.println(ApiLinks.URL_ITEM_GET);
-        System.out.println("-------------------");
-        //VolleyGen.instance().addToRequestQue(requestGen);
-        System.out.println(requestGen);
-    }
-
-    public void checkList() {
-        checkList(null);
+        return ItemList;
     }
 
     private ItemList() {
-        checkList();
     }
 
-    public int getItemListSize() {
-        return items.size();
+    public void getItems() {
+        Call<List<Items>> call = FantApi.getSINGLETON().getApi().getItems();
+        call.enqueue(new Callback<List<Items>>() {
+            @Override
+            public void onResponse(Call<List<Items>> call, Response<List<Items>> response) {
+                if (response.isSuccessful()) {
+                    itemsResponse.postValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Items>> call, Throwable t) {
+
+            }
+        });
     }
 
-    public ArrayList<Items> getItems() {
-        return items;
+    public LiveData<List<Items>> getItemResponse() {
+        return itemsResponse;
     }
-
-    public Items getItemById(int id) {
-        return items.get(id);
-    }
-
 }

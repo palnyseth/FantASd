@@ -28,14 +28,12 @@
         <item
             android:id="@+id/nav_additem"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Legg til item"
-            />
+            android:title="Legg til item" />
 
         <item
             android:id="@+id/nav_buyitem"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Legg til item"
-            />
+            android:title="kjøp" />
 
     </group>
 </menu>

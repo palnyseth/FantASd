@@ -60,14 +60,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-               R.id.nav_home, R.id.nav_login, R.id.nav_create)
+               R.id.nav_home, R.id.nav_login, R.id.nav_create, R.id.nav_additem, R.id.nav_buyitem) //lrgg til ting her
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        ItemList.getListInstance().checkList();
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
