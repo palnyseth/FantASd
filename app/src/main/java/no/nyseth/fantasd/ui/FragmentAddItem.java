@@ -44,7 +44,7 @@ public class FragmentAddItem extends Fragment {
     }
 
     public void addItem() {
-        String authHeader = "";
+        String authHeader = user.getUserToken();
         String itemTitle = itemTitleV.getText().toString();
         String itemPrice = itemPriceV.getText().toString();
         String itemDesc = itemDescV.getText().toString();

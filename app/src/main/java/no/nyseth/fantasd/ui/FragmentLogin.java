@@ -1,7 +1,8 @@
 package no.nyseth.fantasd.ui;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -13,15 +14,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
 import no.nyseth.fantasd.R;
 import no.nyseth.fantasd.network.FantApi;
-import no.nyseth.fantasd.network.FantApi2;
 import no.nyseth.fantasd.shopnuser.LoggedInUser;
-import no.nyseth.fantasd.shopnuser.User;
-import no.nyseth.fantasd.ui.home.HomeFragment;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +31,8 @@ public class FragmentLogin extends Fragment {
     TextView uidV;
     TextView pwdV;
 
+    private String token;
+    LoggedInUser loggedInUser = new LoggedInUser();
 
     public FragmentLogin() {}
 
@@ -67,12 +66,19 @@ public class FragmentLogin extends Fragment {
         testKnapp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                testpiss();
+                testpiss2();
             }
         });
 
 
         return view;
+    }
+
+    public void testpiss2() {
+        SharedPreferences preferences = getActivity().getSharedPreferences("MY_APP",Context.MODE_PRIVATE);
+        String retrivedToken  = preferences.getString("TOKEN",null);//second parameter default value.
+
+        System.out.println("Token ? " + retrivedToken);
     }
 
     public void testpiss() {
@@ -81,13 +87,16 @@ public class FragmentLogin extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Call<LoggedInUser> call = FantApi.getSINGLETON().getApi().currentUser("Bearer " + "eyJ0eXAiOiJKV1QiLCJraWQiOiJhYmMtMTIzNDU2Nzg5MCIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJrYWtldGVzdGVyIiwianRpIjoiYS0xMjMiLCJpc3MiOiJ0ZW1wbGF0ZSIsImlhdCI6MTYwMjE2OTQ3MiwiZXhwIjoxNjAyMjU1ODcyLCJ1cG4iOiJrYWtldGVzdGVyIiwiZ3JvdXBzIjpbInVzZXIiXSwiYXVkIjoiYXVkIiwiYXV0aF90aW1lIjoxNjAyMTY5NDcyNDcxfQ.PvNbkaLe1JoshloGGjnU-jk-a9oaKzoTOWuNYJNP_o8pPneNLzzhgrxgMNSWp65VyptnCErVReP5A0ARP3OKJ5HNCumswqUR6PIrnqDWXdeVVyNU7_UeeQZkfkn1q5DOjMsL7Gtex5DFuS7T7NolQCbuyGXc632JKQl3Qp88dN3cYtL-hOc_B6BqmVAOMgoQUAnXIKimoWhsESrt-dnPjbFcnIa8_6eQQdYQXIG6_9xZoAGF2_JbAiwL0PPAeLrloarwJ2yvTWHsSeE3jFPyECZJ8TqmE71HXqwDwQX6nXpfy1MJ1e1qiHnebVz4E-m4dQUYLZ-HcA2hRZy8vdzNxw");
+        Call<LoggedInUser> call = FantApi.getSINGLETON().getApi().currentUser(token);
         call.enqueue(new Callback<LoggedInUser>() {
             @Override
             public void onResponse(Call<LoggedInUser> call, Response<LoggedInUser> response) {
-                LoggedInUser loggedInUser = response.body();
+                System.out.println("TOKKOASDOK: " + token);
+                System.out.println("Token?: " + loggedInUser.getUserToken());
                 System.out.println(response);
                 System.out.println(response.body());
+
+
             }
 
             @Override
@@ -97,8 +106,7 @@ public class FragmentLogin extends Fragment {
         });
     }
 
-    private String token;
-    LoggedInUser loggedInUser = new LoggedInUser();
+
 
     public void loginUser() {
         String uid = uidV.getText().toString();
@@ -115,17 +123,20 @@ public class FragmentLogin extends Fragment {
             return;
         }
 
+
+
         Call<ResponseBody> call = FantApi.getSINGLETON().getApi().userLogin(uid,pwd);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(getActivity(), "Ya logged inn!", Toast.LENGTH_LONG).show();
-                    System.out.println("Token? " + response.body().toString());
-                    loggedInUser.setUserToken(response.body().toString());
-                    token = response.body().toString();
-                    System.out.println("Token: " + token);
                     Navigation.findNavController(getView()).popBackStack();
+
+
+                    token = response.headers().get("Authorization");
+                    //System.out.println("TOKEN: " + token);
+                    //loggedInUser.setUserToken(token);
                 }
                 else {
                     Toast.makeText(getActivity(), "Noe gikk galt", Toast.LENGTH_LONG).show();

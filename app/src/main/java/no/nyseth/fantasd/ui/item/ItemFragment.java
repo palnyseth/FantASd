@@ -25,12 +25,11 @@ public class ItemFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         itemViewModel = new ViewModelProvider(this).get(ItemViewModel.class);
         View root = inflater.inflate(R.layout.fragment_item, container, false);
-        final TextView textView = root.findViewById(R.id.itemlist_name);
 
         itemViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                textView.setText(s);
+                //
             }
         });
         return root;
