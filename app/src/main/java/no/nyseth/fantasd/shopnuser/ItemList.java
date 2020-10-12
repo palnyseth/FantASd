@@ -3,23 +3,13 @@ package no.nyseth.fantasd.shopnuser;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.android.volley.Request;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import no.nyseth.fantasd.network.ApiLinks;
 import no.nyseth.fantasd.network.FantApi;
 import no.nyseth.fantasd.network.FantApi2;
-import no.nyseth.fantasd.network.RequestGen;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class ItemList {
     private static final String BASE_URL = "http://192.168.0.149:8080/FantProsjekt/api/";

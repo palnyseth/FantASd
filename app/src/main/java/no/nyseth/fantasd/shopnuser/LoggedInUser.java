@@ -1,31 +1,54 @@
 package no.nyseth.fantasd.shopnuser;
 
+import com.android.volley.AuthFailureError;
 import com.google.gson.annotations.Expose;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoggedInUser {
 
-    @Expose
-    private String uid;
-    private String userToken;
+    private static LoggedInUser instance = null;
+    private boolean isLoggedIn = false;
+    private User user;
+    private String jwt;
 
-    public LoggedInUser(String uid) {
-        this.uid = uid;
+    public static LoggedInUser getInstance() {
+        if (instance == null) {
+            instance = new LoggedInUser();
+        }
+        return  instance;
     }
 
-    public LoggedInUser() {
+    public boolean isLoggedIn() {
+        return isLoggedIn;
     }
 
-    public void setUserToken(String token) {
-        this.userToken = token;
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
     }
 
-    public String getUserToken() {
-        return userToken;
+    public void updateUser() {}
+
+    public Map<String, String> getHeaders() throws AuthFailureError {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + jwt);
+        return headers;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public User getUser() {
+        return user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 
+    public String getJwt() {
+        return jwt;
+    }
+
+    public void setJwt(String jwt) {
+        this.jwt = jwt;
+    }
 }

@@ -27,6 +27,8 @@ public class ApiLinks {
     public static final String URL_ITEM_REMOVE = URL + "api/shop/removeitem";
     public static final String URL_ITEM_BUY = URL + "api/shop/buyitem";
 
+    public static final String PREF_KEY_BEARER_TOKEN = "bearerToken";
+
     public static final Response.ErrorListener newEL = new Response.ErrorListener() {
 
         @Override

@@ -44,7 +44,7 @@ public class FragmentAddItem extends Fragment {
     }
 
     public void addItem() {
-        String authHeader = user.getUserToken();
+        String token = LoggedInUser.getInstance().getJwt();
         String itemTitle = itemTitleV.getText().toString();
         String itemPrice = itemPriceV.getText().toString();
         String itemDesc = itemDescV.getText().toString();
@@ -64,7 +64,7 @@ public class FragmentAddItem extends Fragment {
             itemDescV.requestFocus();
             return;
         }
-        if (authHeader == null) {
+        if (token == null) {
             itemDescV.setError("Ikke logget inN!");
             itemDescV.requestFocus();
             Toast.makeText(getActivity(), "Ikke logget inn!", Toast.LENGTH_LONG).show();
@@ -72,7 +72,7 @@ public class FragmentAddItem extends Fragment {
         }
 
         Call<ResponseBody> call = FantApi.getSINGLETON().getApi()
-                .addItem(authHeader,itemTitle,itemPrice,itemDesc);
+                .addItem(token,itemTitle,itemPrice,itemDesc);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

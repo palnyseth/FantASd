@@ -3,6 +3,7 @@ package no.nyseth.fantasd.ui;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -16,7 +17,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import no.nyseth.fantasd.R;
+import no.nyseth.fantasd.network.ApiLinks;
 import no.nyseth.fantasd.network.FantApi;
 import no.nyseth.fantasd.shopnuser.LoggedInUser;
 import okhttp3.ResponseBody;
@@ -55,18 +62,36 @@ public class FragmentLogin extends Fragment {
         submitV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (view.getId()) {
+                Context context = getActivity();
+                RequestQueue queue = Volley.newRequestQueue(context);
+                String url = "http://192.168.0.149:8080/FantProsjekt/api/auth/login" + "?uid=" + uidV.getText() + "&pwd=" + pwdV.getText();
+
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                response -> {
+                    SharedPreferences preferences = getActivity().getSharedPreferences("MyPref",0);
+                    SharedPreferences.Editor editor = preferences.edit();
+
+                    LoggedInUser.getInstance().setJwt(response);
+                    LoggedInUser.getInstance().setLoggedIn(true);
+
+                    System.out.println("Pog?");
+                }, error -> {
+                    System.out.println("Shit very fuck");
+                });
+                queue.add(stringRequest);
+
+                /*switch (view.getId()) {
                     case R.id.login_submit:
                         loginUser();
                         break;
-                }
+                }*/
             }
         });
 
         testKnapp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                testpiss2();
+                testpiss();
             }
         });
 
@@ -74,11 +99,9 @@ public class FragmentLogin extends Fragment {
         return view;
     }
 
-    public void testpiss2() {
-        SharedPreferences preferences = getActivity().getSharedPreferences("MY_APP",Context.MODE_PRIVATE);
-        String retrivedToken  = preferences.getString("TOKEN",null);//second parameter default value.
 
-        System.out.println("Token ? " + retrivedToken);
+    public void testpiss2() {
+        System.out.println("PROBABLY RETARDED: " + LoggedInUser.getInstance().getJwt());
     }
 
     public void testpiss() {
@@ -87,16 +110,11 @@ public class FragmentLogin extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Call<ResponseBody> call = FantApi.getSINGLETON().getApi().currentUser(token);
+        Call<ResponseBody> call = FantApi.getSINGLETON().getApi().currentUser("Bearer " + LoggedInUser.getInstance().getJwt());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                System.out.println("TOKKOASDOK: " + token);
-                System.out.println("Token?: " + loggedInUser.getUserToken());
-                System.out.println(response);
                 System.out.println(response.body());
-
-
             }
 
             @Override
