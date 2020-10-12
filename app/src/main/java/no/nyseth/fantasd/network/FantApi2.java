@@ -33,7 +33,7 @@ public interface FantApi2 {
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @Multipart
     @POST("shop/additem")
-    public Call<ResponseBody> addItem(@Header("Authorization") String authHeader, @Part("itemTitle") String itemTitle, @Part("itemPrice") String itemPrice, @Part("itemDesc") String itemDesc);
+    public Call<ResponseBody> addItem(@Header("Authorization") String token, @Part("itemTitle") String itemTitle, @Part("itemPrice") String itemPrice, @Part("itemDesc") String itemDesc);
 
     @POST("shop/buyitem")
     public Call<ResponseBody> buyItem(@Query("itemId") String itemId);
@@ -43,7 +43,7 @@ public interface FantApi2 {
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET("auth/currentuser")
-    public Call<LoggedInUser> currentUser(@Header("Authorization") String auth);
+    public Call<ResponseBody> currentUser(@Header("Authorization") String token);
 
     @GET("shop/getitems")
     public Call<List<Items>> getItems();

@@ -47,6 +47,8 @@ public class ItemList {
             public void onResponse(Call<List<Items>> call, Response<List<Items>> response) {
                 if (response.isSuccessful()) {
                     itemsResponse.postValue(response.body());
+                    System.out.println("Body: " + response.body());
+                    System.out.println("Item shit: " + itemsResponse.getValue());
                 }
             }
 

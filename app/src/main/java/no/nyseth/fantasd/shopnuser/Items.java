@@ -1,6 +1,9 @@
 package no.nyseth.fantasd.shopnuser;
 
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -15,12 +18,31 @@ import lombok.Setter;
 @Setter
 public class Items {
     //Item fields
+
+    @Expose
+    @SerializedName("id")
     private Long id;
+
+    @Expose
+    @SerializedName("itemTitle")
     private String itemTitle;
+
+    @Expose
+    @SerializedName("itemPrice")
     private BigDecimal itemPrice;
+
+    @Expose
+    @SerializedName("itemDesc")
     private String itemDesc;
+
+    @Expose
+    @SerializedName("itemOwner")
     private User itemOwner;
+
+    @Expose
+    @SerializedName("itemBuyer")
     private User itemBuyer;
+
     private List<ItemImage> itemImage;
 
     public String getItemTitle() {

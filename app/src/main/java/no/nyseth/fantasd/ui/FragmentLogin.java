@@ -87,10 +87,10 @@ public class FragmentLogin extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Call<LoggedInUser> call = FantApi.getSINGLETON().getApi().currentUser(token);
-        call.enqueue(new Callback<LoggedInUser>() {
+        Call<ResponseBody> call = FantApi.getSINGLETON().getApi().currentUser(token);
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<LoggedInUser> call, Response<LoggedInUser> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 System.out.println("TOKKOASDOK: " + token);
                 System.out.println("Token?: " + loggedInUser.getUserToken());
                 System.out.println(response);
@@ -100,7 +100,7 @@ public class FragmentLogin extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<LoggedInUser> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
             }
         });

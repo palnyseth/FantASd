@@ -4,6 +4,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class FantApi {
    private static final String BASE_URL = "http://192.168.0.149:8080/FantProsjekt/api/";
