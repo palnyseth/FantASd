@@ -9,6 +9,7 @@ import no.nyseth.fantasd.shopnuser.User;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -31,9 +32,10 @@ public interface FantApi2 {
     public Call<ResponseBody> userLogin(@Query("uid") String username, @Query("pwd") String password);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @Multipart
+    //@Multipart
     @POST("shop/additem")
-    public Call<ResponseBody> addItem(@Header("Authorization") String token, @Part("itemTitle") String itemTitle, @Part("itemPrice") String itemPrice, @Part("itemDesc") String itemDesc);
+    //public Call<ResponseBody> addItem(@Header("Authorization") String token, @Part("itemTitle") String itemTitle, @Part("itemPrice") String itemPrice, @Part("itemDesc") String itemDesc);
+    public Call<Items> addItem(@Header("Authorization") String token, @Body Items item);
 
     @POST("shop/buyitem")
     public Call<ResponseBody> buyItem(@Query("itemId") String itemId);

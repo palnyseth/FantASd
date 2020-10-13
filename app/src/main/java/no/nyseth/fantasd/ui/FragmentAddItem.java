@@ -16,6 +16,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import no.nyseth.fantasd.R;
 import no.nyseth.fantasd.network.FantApi;
 import no.nyseth.fantasd.shopnuser.Items;
@@ -31,7 +39,6 @@ public class FragmentAddItem extends Fragment {
     TextView itemTitleV;
     TextView itemPriceV;
     TextView itemDescV;
-    private Items items = new Items();
     private LoggedInUser user = new LoggedInUser();
 
     public FragmentAddItem() {}
@@ -44,7 +51,9 @@ public class FragmentAddItem extends Fragment {
     }
 
     public void addItem() {
-        String token = LoggedInUser.getInstance().getJwt();
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+
+        String token = "Bearer " + LoggedInUser.getInstance().getJwt();
         String itemTitle = itemTitleV.getText().toString();
         String itemPrice = itemPriceV.getText().toString();
         String itemDesc = itemDescV.getText().toString();
@@ -71,11 +80,13 @@ public class FragmentAddItem extends Fragment {
             System.out.println("ingen jwt");
         }
 
-        Call<ResponseBody> call = FantApi.getSINGLETON().getApi()
-                .addItem(token,itemTitle,itemPrice,itemDesc);
-        call.enqueue(new Callback<ResponseBody>() {
+
+        Items item = new Items(itemTitleV.getText().toString(), itemPriceV.getText().toString(), itemDescV.getText().toString());
+
+        Call<Items> call = FantApi.getSINGLETON().getApi().addItem("Bearer " + LoggedInUser.getInstance().getJwt(), item);
+        call.enqueue(new Callback<Items>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<Items> call, Response<Items> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(getActivity(), "Lagt ut!", Toast.LENGTH_SHORT).show();
                     System.out.println(response.body().toString());
@@ -88,7 +99,7 @@ public class FragmentAddItem extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<Items> call, Throwable t) {
 
             }
         });

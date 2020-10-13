@@ -29,7 +29,7 @@ public class Items {
 
     @Expose
     @SerializedName("itemPrice")
-    private BigDecimal itemPrice;
+    private String itemPrice;
 
     @Expose
     @SerializedName("itemDesc")
@@ -43,6 +43,12 @@ public class Items {
     @SerializedName("itemBuyer")
     private User itemBuyer;
 
+    public Items(String itemTitle, String itemPrice, String itemDesc) {
+        this.itemTitle = itemTitle;
+        this.itemPrice = itemPrice;
+        this.itemDesc = itemDesc;
+    }
+
     private List<ItemImage> itemImage;
 
     public String getItemTitle() {
@@ -53,11 +59,11 @@ public class Items {
         this.itemTitle = itemTitle;
     }
 
-    public BigDecimal getItemPrice() {
+    public String getItemPrice() {
         return itemPrice;
     }
 
-    public void setItemPrice(BigDecimal itemPrice) {
+    public void setItemPrice(String itemPrice) {
         this.itemPrice = itemPrice;
     }
 
