@@ -38,10 +38,10 @@ public interface FantApi2 {
     public Call<Items> addItem(@Header("Authorization") String token, @Body Items item);
 
     @POST("shop/buyitem")
-    public Call<ResponseBody> buyItem(@Query("itemId") String itemId);
+    public Call<ResponseBody> buyItem(@Header("Authorization") String token, @Query("itemId") String itemId);
 
     @DELETE("shop/removeitem")
-    public Call<ResponseBody> removeItem(@Query("itemId") String itemId);
+    public Call<ResponseBody> removeItem(@Header("Authorization") String token, @Query("itemId") String itemId);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET("auth/currentuser")
