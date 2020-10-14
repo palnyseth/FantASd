@@ -31,22 +31,22 @@ public class ItemList {
     }
 
     public void getItems() {
-        Call<List<Items>> call = FantApi.getSINGLETON().getApi().getItems();
-        call.enqueue(new Callback<List<Items>>() {
-            @Override
-            public void onResponse(Call<List<Items>> call, Response<List<Items>> response) {
-                if (response.isSuccessful()) {
-                    itemsResponse.postValue(response.body());
-                    System.out.println("Body: " + response.body());
-                    System.out.println("Item shit: " + itemsResponse.getValue());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Items>> call, Throwable t) {
-
-            }
-        });
+//        Call<List<Items>> call = FantApi.getSINGLETON().getApi().getItems();
+//        call.enqueue(new Callback<List<Items>>() {
+//            @Override
+//            public void onResponse(Call<List<Items>> call, Response<List<Items>> response) {
+//                if (response.isSuccessful()) {
+//                    itemsResponse.postValue(response.body());
+//                    System.out.println("Body: " + response.body());
+//                    System.out.println("Item shit: " + itemsResponse.getValue());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Items>> call, Throwable t) {
+//
+//            }
+//        });
     }
 
     public LiveData<List<Items>> getItemResponse() {

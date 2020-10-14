@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-               R.id.nav_home, R.id.nav_login, R.id.nav_create, R.id.nav_additem, R.id.nav_buyitem, R.id.nav_market, R.id.nav_item) //lrgg til ting her
+               R.id.nav_home, R.id.nav_login, R.id.nav_create, R.id.nav_additem, R.id.nav_buyitem, R.id.nav_market, R.id.nav_item, R.id.nav_listing) //lrgg til ting her
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -75,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_item:
                         Toast.makeText(MainActivity.this, "Til items!", Toast.LENGTH_LONG).show();
+                        fab.hide();
+                        break;
+                    case R.id.nav_listing:
+                        Toast.makeText(MainActivity.this, "greg", Toast.LENGTH_LONG).show();
                         fab.hide();
                         break;
                     default:

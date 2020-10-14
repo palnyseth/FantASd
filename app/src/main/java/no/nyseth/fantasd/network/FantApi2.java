@@ -6,6 +6,7 @@ import java.util.List;
 import no.nyseth.fantasd.shopnuser.Items;
 import no.nyseth.fantasd.shopnuser.LoggedInUser;
 import no.nyseth.fantasd.shopnuser.User;
+import no.nyseth.fantasd.ui.itemlist.ItemListings;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -48,5 +49,5 @@ public interface FantApi2 {
     public Call<ResponseBody> currentUser(@Header("Authorization") String token);
 
     @GET("shop/getitems")
-    public Call<List<Items>> getItems();
+    public Call<List<ItemListings>> getItems();
 }

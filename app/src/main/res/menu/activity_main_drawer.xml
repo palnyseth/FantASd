@@ -41,9 +41,9 @@
             android:title="marked" />
 
         <item
-            android:id="@+id/nav_item"
+            android:id="@+id/nav_listing"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="gjenstand yes" />
+            android:title="listing" />
 
     </group>
 </menu>
