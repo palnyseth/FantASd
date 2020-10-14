@@ -41,11 +41,15 @@ public class FragmentItemListing extends Fragment {
             @Override
             public void onResponse(Call<List<ItemListings>> call, Response<List<ItemListings>> response) {
                 assert response.body() != null;
+
                 itemListings = new ArrayList<>(response.body());
                 listingAdapter = new ListingAdapter(view.getContext(), itemListings);
                 listingAdapter.setItemListings(itemListings);
+
                 recyclerView.setAdapter(listingAdapter);
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
+
                 Toast.makeText(getContext(), "Nicerdicer", Toast.LENGTH_LONG).show();
             }
 
